@@ -1,0 +1,265 @@
+# Config file for creating students in Anthology
+# Run instructions to be added shortly.
+vars:
+ groupRate: 2
+
+load_pattern:
+  - linear:
+      from: 100%
+      to: 100%
+      over: 5s
+
+config:
+  client:
+    headers:
+      Content-Type: application/json
+      Authorization: ApplicationKey eyJDYWxsaW5nQXBwTmFtZSI6IkFQSS1BYXJvbi1UZXN0IiwiS2V5VmFsdWUiOiJRQ1YyNFF3aldnREdnaDd1QVc5QTlnPT0ifQ==
+
+providers:
+  group_created: # will auto_return until deleted
+    response:
+      auto_return: if_not_full
+
+  student:
+    file:
+      path: "students2.csv"
+      repeat: false
+      format: csv
+      csv:
+        headers: ssn,fname,lname
+      random: true
+
+loggers:
+  test:
+    to: stderr
+
+endpoints:
+  # Endpoints Config
+  - method: POST
+    url: https://sisclientweb-tst-301008.campusnexus.cloud/api/commands/Common/Student/SaveNew
+    peak_load: 42hpm
+    body: '{
+              "payload": {
+                  "isExcludedCrmIntegration": false,
+                  "addressTypeId": 0,
+                  "studentInquiryRequired": false,
+                  "extraCurricularsList": [],
+                  "programsList": [],
+                  "enrolledProgramIdList": [],
+                  "ethnicitiesList": [],
+                  "leadSourcesList": [
+                      690
+                  ],
+                  "deleteVeteranDetails": false,
+                  "vendors": [
+                      {
+                          "SyOrganizationId": -1,
+                          "LeadSourceId": 690
+                      }
+                  ],
+                  "studentAddressAssociation": 2,
+                  "newAssignedAdmissionsRepId": 0,
+                  "assignedAdmissionsRepReassignedDate": "0001/01/01 00:00:00",
+                  "studentRelationshipAddress": null,
+                  "lastFourSsn": null,
+                  "customProperties": {},
+                  "multiValueCustomProperties": {},
+                  "originalCustomPropertiesValues": null,
+                  "originalMultiValueCustomPropertiesValues": null,
+                  "genderPronounList": [],
+                  "overridePrevEducAltPellValidation": false,
+                  "id": -1,
+                  "acgEligReasonCode": null,
+                  "agencyId": 0,
+                  "alienNumber": "",
+                  "arAccountStatus": "X",
+                  "arBalance": 0,
+                  "arNextTransactionNumber": 0,
+                  "assignedAdmissionsRepId": 56,
+                  "athleticIdentifier": null,
+                  "bestTimeToContact": "Anytime",
+                  "campusId": 5,
+                  "citizenId": 0,
+                  "city": "",
+                  "collegeId": null,
+                  "countryId": "1",
+                  "countyId": 0,
+                  "createdDateTime": "2023/07/17 00:00:00",
+                  "cumulativeGpa": null,
+                  "cumulativeGpaPoints": null,
+                  "currencyCodeId": null,
+                  "currentLda": null,
+                  "dataBlockIndicator": false,
+                  "dateOfBirth": null,
+                  "dbiModifiedDate": null,
+                  "defaultAddressCode": null,
+                  "defaultMasterStudentAddressId": null,
+                  "defaultStudentAddressId": null,
+                  "disabled": "X",
+                  "driverLicenseNumber": "",
+                  "driverLicenseState": "",
+                  "emailAddress": "",
+                  "employabilityAboutInfo": null,
+                  "employerId": 0,
+                  "employmentStatusId": 0,
+                  "externalStudentIdentifier": null,
+                  "extraCurricularActivityId": 0,
+                  "facebookUrl": null,
+                  "faGradPlusCounselingDate": null,
+                  "faRigorousHighSchoolProgramCodeId": null,
+                  "firstName": "${student.fname}",
+                  "genderId": 0,
+                  "gpaCredits": null,
+                  "hispanicLatino": null,
+                  "hsAcademicGpa": null,
+                  "instagramUrl": null,
+                  "isActive": true,
+                  "isAllowedBulkRegistrationByTrack": null,
+                  "isBadAddress": false,
+                  "isBadPhone": false,
+                  "isDdVeteran": false,
+                  "isEftDefaultForStipends": false,
+                  "isInDistrict": false,
+                  "isSscrError11Received": false,
+                  "lastActivityDate": null,
+                  "lastInterestDate": null,
+                  "lastModifiedDateTime": "2023/07/17 00:00:00",
+                  "lastModifiedUserId": 142,
+                  "lastName": "${student.lname}",
+                  "lastNameFirstFour": null,
+                  "lastStatementBeginDate": null,
+                  "lastStatementCloseDate": null,
+                  "lastStatementDate": null,
+                  "leadDate": "2023/07/17 00:00:00",
+                  "leadSourceId": 690,
+                  "leadTypeId": 0,
+                  "linkedInUrl": null,
+                  "maidenName": "",
+                  "maritalStatusId": 0,
+                  "mi": " ",
+                  "middleName": " ",
+                  "mobilePhoneNumber": "",
+                  "nationalityId": 0,
+                  "nickName": "",
+                  "niStudent": 0,
+                  "note": "",
+                  "originalAssignedAdmissionsRepId": 56,
+                  "originalExpectedStartDate": null,
+                  "originalStartDate": null,
+                  "otherEmailAddress": "",
+                  "otherLanguageFirstName": null,
+                  "otherLanguageLastName": null,
+                  "otherLanguageMiddleName": null,
+                  "otherLanguageStudentFullName": null,
+                  "otherPhoneNumber": null,
+                  "personId": null,
+                  "phoneNumber": "",
+                  "pin": null,
+                  "postalCode": "",
+                  "postalCodeFirstThree": null,
+                  "preferredContactType": "Ph",
+                  "preferredName": null,
+                  "previousEducationGpa": null,
+                  "previousEducationId": 0,
+                  "programGroupId": 0,
+                  "programId": 0,
+                  "rawFirstName": null,
+                  "rawLastName": null,
+                  "rawPhoneNumber": null,
+                  "rowVersion": null,
+                  "schoolStatusId": 1,
+                  "shiftId": 0,
+                  "smsServiceProviderId": null,
+                  "sourceSystem": "C",
+                  "ssn": "${student.ssn}",
+                  "startDate": null,
+                  "state": "",
+                  "statementComment": "",
+                  "streetAddress": "",
+                  "streetAddress2": null,
+                  "studentFullName": null,
+                  "studentIdentifier": null,
+                  "studentNumber": null,
+                  "subscribeToSms": false,
+                  "suffix": null,
+                  "suffixId": null,
+                  "titleId": 0,
+                  "twitterUrl": null,
+                  "veteran": "X",
+                  "workPhoneNumber": "",
+                  "workPhoneNumberExtension": "",
+                  "originalState": "H4sIAAAAAAAEAL1Yy27bMBD8lcD3Wk5zMxwDqmIERf1C5aa90uTKXoQijSVpR/n6UnJQoIcURYHpSZAIzg60u7NDzkoR1W2aL9Q9KZto04Qo7A7KdbvuRDcvrXXhfnSM8TQtiqCP1KowblmLD76JY+3b4uNkclfcToqahJXlVxXZu2IADqMrwpR/YVwul/Hlbuzl0G+8LX6slvUA+4FdiMppGs1n79AZFuZLFeLKG26YzLdA8tnMiv77bNhyw1PH9n4UJdGomA9L72L9XZAHFWnHLQHCQLhXQpkxkvaOoyUI9zXr57WCkF4pNuRA4HUUolgaIxQCIqccOwjtXCQA3K3PvWwrbxDglU8udpDy2x69o3Vq9yQA9O9env9rhMVLJBeyHCMUkpTp3yB5eCRnQMq+HuZTHlSgElop4Vz7fWelAInwIHwmWbLOuSVUB/8WBFavpeUsyTD0AzmNyXLWY34lB8FetIotbpSUIfDBkSlNy6EXh/CVThgTlSWi9kk0RiS24g+i2kfxCcP/LQAEuz5yE0Gs6cw+hYVJetA6SJRSSq37QXwVOpQ3acnFyrf9A9JpJ+s70KC5gvfMgbNg7THqz0HtLSEYP1EkUQhH8olC7A88O195F5VGVMxVzuou5NJEmAdGcA6Iv529pagqibBOVmU1iHxGeapNPGYzix2LKzbGEurs6fdsCev9h2ORgM5FQg2JkHnrrH4FcR0ShjL6R+jiz5dZ85/9wSrH7RIAAA==",
+                  "secureState": "H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=",
+                  "extendedProperties": [],
+                  "entityState": 0,
+                  "ethnicity": [],
+                  "extraCurricular": [],
+                  "oldAssignedAdmissionsRepId": 0,
+                  "oldSchoolStatusId": 1,
+                  "deleteInquiryDetails": true,
+                  "fullName": "null null",
+                  "age": "",
+                  "niStudentEnabled": true,
+                  "SSN": "${student.ssn}",
+                  "StudentInquiryRequired": false,
+                  "ExtraCurricularActivitiesList": [],
+                  "ProgramsList": [],
+                  "EthnicitiesList": [],
+                  "LeadSourcesList": [
+                      690
+                  ],
+                  "Vendors": [
+                      {
+                          "SyOrganizationId": -1,
+                          "LeadSourceId": 690
+                      }
+                  ],
+                  "AddressTypeId": 0,
+                  "DeleteVeteranDetails": false,
+                  "leadSourceLeadVendorColl": [
+                      {
+                          "SyOrganizationId": null,
+                          "OrganizationName": null,
+                          "ParentSyOrganizationId": null,
+                          "NodeSyOrganizationId": null,
+                          "LeadSourceName": "Test Import",
+                          "LeadSourceId": 690,
+                          "LeadSourceLeadVendorId": null,
+                          "NodeProspectInquiryLeadSourceId": null,
+                          "IsDefault": null,
+                          "Code": null,
+                          "OverrideDefaultVendor": false,
+                          "checked": false
+                      },
+                      {
+                          "SyOrganizationId": null,
+                          "OrganizationName": null,
+                          "ParentSyOrganizationId": null,
+                          "NodeSyOrganizationId": null,
+                          "LeadSourceName": "Test Lead Source",
+                          "LeadSourceId": 691,
+                          "LeadSourceLeadVendorId": null,
+                          "NodeProspectInquiryLeadSourceId": null,
+                          "IsDefault": null,
+                          "Code": null,
+                          "OverrideDefaultVendor": false,
+                          "checked": false
+                      }
+                  ],
+                  "leadTime": "12:00 AM"
+              }
+          }'
+    provides:
+      group_created:
+        select: response.body
+        where: response.status == 200 || response.status == 409
+        select:
+          request:
+            - request.headers
+            - request.body
+    peak_load: ${groupRate}hps
+    logs:
+      test:
+        select: '`POST ${response.body}`'
+
+ 

@@ -1,0 +1,56 @@
+vars:
+ groupRate: 2
+
+load_pattern:
+  - linear:
+      from: 100%
+      to: 100%
+      over: 5s
+
+config:
+  client:
+    headers:
+      Content-Type: application/json
+
+providers:
+  group_created: # will auto_return until deleted
+    response:
+      auto_return: if_not_full
+
+  student:
+    file:
+      path: "students.csv"
+      repeat: false
+      format: csv
+      csv:
+        headers: ssn,fname,lname
+      random: true
+
+loggers:
+  test:
+    to: stderr
+
+endpoints:
+  # Endpoints Config
+  - method: POST
+    url: http://localhost:8080/user
+    peak_load: 42hpm
+    body: '{
+        "fname":"${student.fname}",
+        "lname":"${student.lname}",
+        "ssn":"${student.ssn}"
+      }'
+    provides:
+      group_created:
+        select: response.body
+        where: response.status == 200 || response.status == 409
+        select:
+          request:
+            - request.headers
+            - request.body
+    peak_load: ${groupRate}hps
+    logs:
+      test:
+        select: '`POST ${response.body}`'
+
+ 
